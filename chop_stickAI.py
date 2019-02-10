@@ -12,6 +12,13 @@ class Chop_Sticks:
         self.playerturn = True
 
     def tap(self, to_left_hand, from_left_hand):
+        print("\n")
+        print(self.player_one_left)
+        print(self.player_two_left)
+        print(self.player_two_right)
+        print(self.player_one_right)
+        print("\n")
+
         if self.playerturn:
             if to_left_hand:
                 #Player 1's left hand taps Player 2's left hand
