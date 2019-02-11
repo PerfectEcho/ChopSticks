@@ -15,9 +15,11 @@ class Chop_Sticks:
         if self.player_one_left == self.player_one_right == 0:
             print('Player Defeated')
             self.not_at_end = False
+            return 0
         elif self.player_two_left == self.player_two_right == 0:
             print('Player Defeated')
             self.not_at_end = False
+            return 0
         else:
             self.not_at_end =True
 
@@ -40,6 +42,34 @@ class Chop_Sticks:
             print(self.player_one_left,"        ",self.player_one_right)
             print("\n")
             self.playerturn = False
+
+    def split(self):
+        total_one = (self.player_one_left + self.player_one_right)
+        total_two = (self.player_two_left + self.player_two_right)
+        if self.playerturn:
+            if total_one % 2 != 0 :
+                print("Can't split")
+                self.playerturn = True
+            else:
+                if self.player_one_left == self.player_one_right:
+                    print("Can't split")
+                    self.playerturn = True
+                else:
+                    self.player_one_left = total_one / 2
+                    self.player_one_right = total_one / 2
+                    self.playerturn = True
+        else:
+            if total_two % 2 != 0 :
+                print("Can't split")
+                self.playerturn = False
+            else:
+                if self.player_two_left == self.player_two_right:
+                    print("Can't split")
+                    self.playerturn = False
+                else:
+                    self.player_two_left = total_two / 2
+                    self.player_two_right = total_two / 2
+                    self.playerturn = False
 
     def tap(self, to_left_hand):
         if self.playerturn:
@@ -81,6 +111,7 @@ class Chop_Sticks:
                     else: 
                         self.playerturn = True
             else:
+                #Player 2's right hand taps Player 1's right hand
                 if self.player_one_right == 0: 
                     print('That hand is out try agian')
                     self.playerturn = False
@@ -107,5 +138,7 @@ while game.not_at_end:
             game.tap(False)
         elif hand == 6:
             game.swap()
+        elif hand == 5:
+            game.split()
         else:
             print("try again")
