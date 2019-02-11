@@ -11,19 +11,42 @@ class Chop_Sticks:
         self.not_at_end = True
         self.playerturn = True
 
-    def tap(self, to_left_hand, from_left_hand):
-        print("\n")
-        print(self.player_one_left)
-        print(self.player_two_left)
-        print(self.player_two_right)
-        print(self.player_one_right)
-        print("\n")
+    def player_defeat(self):
+        if self.player_one_left == self.player_one_right == 0:
+            print('Player Defeated')
+            self.not_at_end = False
+        elif self.player_two_left == self.player_two_right == 0:
+            print('Player Defeated')
+            self.not_at_end = False
+        else:
+            self.not_at_end =True
 
+    def swap(self):
+        if self.playerturn:
+            temp = self.player_one_left
+            self.player_one_left = self.player_one_right
+            self.player_one_right = temp
+            print("\n")
+            print(self.player_two_left,"        ",self.player_two_right)
+            print(self.player_one_left,"        ",self.player_one_right)
+            print("\n")
+            self.playerturn = True
+        else:
+            temp = self.player_two_left
+            self.player_two_left = self.player_two_right
+            self.player_two_right = temp
+            print("\n")
+            print(self.player_two_left,"        ",self.player_two_right)
+            print(self.player_one_left,"        ",self.player_one_right)
+            print("\n")
+            self.playerturn = False
+
+    def tap(self, to_left_hand):
         if self.playerturn:
             if to_left_hand:
                 #Player 1's left hand taps Player 2's left hand
                 if self.player_two_left == 0: 
-                    print('That hand is out try agian')
+                    print('That hand is out try again')
                     self.playerturn = True
                 else:
                     self.player_two_left += self.player_one_left
@@ -68,15 +91,21 @@ class Chop_Sticks:
                         self.playerturn = True
                     else: 
                         self.playerturn = True
+        print("\n")
+        print(self.player_two_left,"        ",self.player_two_right)
+        print(self.player_one_left,"        ",self.player_one_right)
+        print("\n")
 
 
-game = Chop_Sticks() # its not counting the first round?
+game = Chop_Sticks() 
 while game.not_at_end:
-    print("Left hand = 1 : Right hand = 0 ")
-    hand = input()
-    if hand == 1:
-        game.tap(True,True)
-    elif hand == 9:
-        game.tap(False,False)
-    else:
-        print("try again")
+    if not game.player_defeat():
+        hand = input("Left hand = 1, Right hand = 0: ")
+        if hand == 1:
+            game.tap(True)
+        elif hand == 0:
+            game.tap(False)
+        elif hand == 6:
+            game.swap()
+        else:
+            print("try again")
