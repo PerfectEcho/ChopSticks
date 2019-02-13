@@ -215,27 +215,37 @@ game = Chop_Sticks()
 try:
     ai = AI()
     moves = ai.score_moves(game)
-    print(moves)
+    list_of_moves = []
+    list_of_scores = []
+    #print(moves)
     for move in moves:
-        print("Move: ", move['move'])
+        list_of_moves.append(move['move'])
+        list_of_scores.append(move['score'])
+        #print(list_of_moves)
+        print(list_of_scores)
+    max_value = max(list_of_scores)
+    index_value = list_of_scores.index(max_value)
+    print(list_of_moves[index_value])
+        #print("Move: ", move['move'])
+        #print("Score: ",move['score'])
  
+
+# while not game.player_defeat:
+    if not game.player_defeat():
+        if list_of_moves[index_value] == 'LL':
+            game.tap(True)
+        elif list_of_moves[index_value] == 'RR':
+            game.tap(False)
+        elif list_of_moves[index_value] == 'LR':
+            game.swap()
+            game.tap(False)
+        elif list_of_moves[index_value] == 'RL':
+            game.swap()
+            game.tap(True)
+        elif list_of_moves[index_value] == 'split':
+            game.split()
+        else:
+            print("try again")
 except RuntimeError:
     print('Stack overflow')
     exit()
-
-# while not game.player_defeat:
-#     if not game.player_defeat():
-#         if ai.make_move() == 'LL':
-#             game.tap(True)
-#         elif ai.make_move() == 'RR':
-#             game.tap(False)
-#         elif ai.make_move() == 'LR':
-#             game.swap()
-#             game.tap(False)
-#         elif ai.make_move() == 'RL':
-#             game.swap()
-#             game.tap(True)
-#         elif ai.make_move() == 'split':
-#             game.split()
-#         else:
-#             print("try again")
