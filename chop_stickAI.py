@@ -152,11 +152,11 @@ class AI:
         fake_game = Chop_Sticks()
         fake_game.set_state(state)
         root_node = {'children': [], 'score': 0}
-        self.recurse_bfs(fake_game, root_node, RECURSION_DEPTH)
+        self.recurse_dfs(fake_game, root_node, RECURSION_DEPTH)
         return root_node['children']
 
 
-    def recurse_bfs(self, game, node, depth):
+    def recurse_dfs(self, game, node, depth):
         depth -= 1
         if depth == 0:
             return 0
@@ -170,14 +170,14 @@ class AI:
             state = game.get_state()
             if game.tap(True):
                 node['children'].append({'children': [], 'score': 0, 'move': 'LL'})
-                node['score'] += self.recurse_bfs(game, node['children'][-1], depth)
+                node['score'] += self.recurse_dfs(game, node['children'][-1], depth)
                 game.set_state(state)
 
             #print('RR')
             state = game.get_state()
             if game.tap(False):
                 node['children'].append({'children': [], 'score': 0, 'move': 'RR'})
-                node['score'] += self.recurse_bfs(game, node['children'][-1], depth)
+                node['score'] += self.recurse_dfs(game, node['children'][-1], depth)
                 game.set_state(state)
 
             #print('LR')
@@ -186,7 +186,7 @@ class AI:
             if game.tap(True):
                 node['children'].append({'children': [], 'score': 0, 'move': 'LR'})
                 game.swap()
-                node['score'] += self.recurse_bfs(game, node['children'][-1], depth)
+                node['score'] += self.recurse_dfs(game, node['children'][-1], depth)
                 game.set_state(state)
             else:
                 game.swap()
@@ -197,7 +197,7 @@ class AI:
             if game.tap(False):
                 node['children'].append({'children': [], 'score': 0, 'move': 'RL'})
                 game.swap()
-                node['score'] += self.recurse_bfs(game, node['children'][-1], depth)
+                node['score'] += self.recurse_dfs(game, node['children'][-1], depth)
                 game.set_state(state)
             else:
                 game.swap()
@@ -206,7 +206,7 @@ class AI:
             state = game.get_state()
             if game.split():
                 node['children'].append({'children': [], 'score': 0, 'move': 'split'})
-                node['score'] += self.recurse_bfs(game, node['children'][-1], depth)
+                node['score'] += self.recurse_dfs(game, node['children'][-1], depth)
                 game.set_state(state)
 
             return node['score']
@@ -221,7 +221,7 @@ while not hand==999 :
                 print(game.player_two_left,"        ",game.player_two_right)
                 print(game.player_one_left,"        ",game.player_one_right)
                 print("\n")
-                hand = input("Enter number Human: ")
+                hand = input("Enter number Human 1= LL, 2=RR, 3 == LR, 4 = RL  5 = split: ")
 
                 if hand == 1:
                     game.tap(True)
